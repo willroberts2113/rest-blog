@@ -1,6 +1,6 @@
-#REST Controllers, Part II
+# REST Controllers, Part II
 
-##Finishing `PostsController`
+## Finishing `PostsController`
 
 We should now complete our CRUD methods for the `PostsController`.
 
@@ -11,6 +11,12 @@ Later, we will create methods for more fine-tuned CRUD operations (ie: `getById(
 Consider this an extended exercise. You will be guided at times and left to work independently at others.
 
 ---
+
+## 🚨 TODO: Make a private List<Post> field so you can manipulate the posts until we get our Data Access Layer integrated.
+    
+    ```JAVA
+    private List<Post> posts = new ArrayList<>(); // make a method which populates this list after
+    ```
 
 ### `@RequestBody`
 
@@ -43,26 +49,25 @@ Now, we are free to use the newly acquired parameter same as any other method!
 
 ---
 
-### FEA-2-A: Make `createPost()` & use `@PostMapping` to allow `POST` requests/responses to be handled in `PostsController`
+### 🚨 FEA-2-A: Make `createPost()` & use `@PostMapping` to allow `POST` requests/responses to be handled in `PostsController`
 
-#### 1. This method will be private, return void (Spring will handle the response), and accept a `Post` object. 
+#### 1. This method will be public, return void (Spring will handle the response), and accept a `Post` object. 
 - Name the `Post` parameter in a way which indicates it is to be created.
     
 
 #### 2. Annotate `createPost()` with `@PostMapping` to allow Spring to direct `POST` requests to this method.
 
 
-####3. Just before your incoming `Post` parameter add the annotation: `@RequestBody`.
+#### 3. Just before your incoming `Post` parameter add the annotation: `@RequestBody`.
  - This tells Spring to look at the requests body in order to find our incoming `Post`.
 
 
-#### 4. For now, simply `sout` the incoming `Post` object's properties in order to confirm the object was received and deserialized correctly.
-
+#### 4. For now, add the the incoming `Post` object's to your private List<Post> field in order to confirm the object was received and deserialized correctly. Call the GET request for getting all Posts to confirm it worked.
 
 #### 5. **Start the server and navigate to `http://localhost:8080/swagger-ui.html`. Then test the POST route on `/api/posts`.**
 
 ---
-### FEA-3-A: Make `updatePost()` & use `@PutMapping` to allow `PUT` requests/responses to be handled in `PostsController`
+### 🚨 FEA-3-A: Make `updatePost()` & use `@PutMapping` to allow `PUT` requests/responses to be handled in `PostsController`
 
 1. Set up this method much like `createPost()`, replacing `@PostMapping` with `@PutMapping("{id}")`.
 
@@ -70,11 +75,12 @@ Now, we are free to use the newly acquired parameter same as any other method!
 2. In addition to `@RequestBody Post post` as a parameter, include `@PathVariable Long id` as the first parameter.
    - Later, this will help us get the `Post` from the database by ID, update it in the code, the save it back to the database.
 
+3. Write an enhanced for-loop over your `Post` list field and update the properties of the `Post` in that list which matches the `@PathVariable` parameter value `id`.
 
-3. **Start the server and navigate to `http://localhost:8080/swagger-ui.html`. Then test the UPDATE route on `/api/posts`.**
+4. **Start the server and navigate to `http://localhost:8080/swagger-ui.html`. Then test the PUT route on `/api/posts`.**
 
 ---
-### FEA-4-A: Make `deletePost()` & `@DeleteMapping` to allow `DELETE` requests/responses to be handled in `PostsController`
+### 🚨 FEA-4-A: Make `deletePost()` & `@DeleteMapping` to allow `DELETE` requests/responses to be handled in `PostsController`
 
 If we remember from the Movies Backend, deleting a record is super easy!
    
@@ -251,6 +257,6 @@ If you investigate the flow of our code, you will find that the `viewEvent` prop
 ---
 
 
-##Next Up: [The User](8-the-user.md)
+## Next Up: [The User](8-the-user.md)
 
 
