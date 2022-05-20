@@ -1,6 +1,7 @@
 package com.example.restblog.web;
 
 import com.example.restblog.data.Post;
+import com.example.restblog.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,21 +13,25 @@ import java.util.Objects;
 @RequestMapping(value = "/api/posts", headers = "Accept=application/json")
 public class PostsController {
 
-    List<Post> posts = setPostList();
+    private final UserService userService;
+
+    public PostsController(UserService userService){
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<Post> getAll() {
-        return posts;
+        return userService.getPostList();
     }
 
     @GetMapping("{id}")
     public Post getById(@PathVariable Long id) {
-        for (Post post : getAll()) {
+        for (Post post : userService.getPostList()) {
             if (Objects.equals(post.getId(), id)) {
                 return post;
             }
         }
-        return new Post();
+        return null;
     }
 
     @PostMapping
@@ -36,7 +41,7 @@ public class PostsController {
 
     @PutMapping("{id}")
     public void updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {
-        for (Post post : posts){
+        for (Post post : userService.getPostList()){
             if (post.getId().equals(id)){
                 post.setContent(updatedPost.getContent());
                 post.setTitle(updatedPost.getTitle());
@@ -50,11 +55,4 @@ public class PostsController {
     }
 
 
-    private List<Post> setPostList(){
-        List<Post> postList = new ArrayList<>();
-        postList.add(new Post(1L, "Cool title", "Cool content"));
-        postList.add(new Post(2L, "Fake title", "Fake content"));
-        postList.add(new Post(3L, "Not from DB", "Fake data"));
-        return postList;
-    }
 }

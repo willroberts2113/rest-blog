@@ -5,7 +5,7 @@ let requestMethod = "POST";
 let postId = "";
 
 export default function PostIndex(props) {
-
+    console.log(props);
     // language=HTML
     return `
       <header>
