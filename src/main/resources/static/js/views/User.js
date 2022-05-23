@@ -47,7 +47,5 @@ function addUpdatePasswordListener() {
             }).finally(() => {
                 createView("/user")
             })
-
-
     })
 }

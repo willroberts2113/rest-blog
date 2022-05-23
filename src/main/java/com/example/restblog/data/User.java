@@ -1,5 +1,7 @@
 package com.example.restblog.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +15,8 @@ public class User {
     private LocalDateTime createdAt = LocalDateTime.now();
     private Role role = Role.USER;
 
-    // 1 user has authored many posts
-    private List<Post> posts = new ArrayList<>();
+    @JsonIgnoreProperties("user") // we want to ignore the post.user field to prevent a StackOverflowError
+    private List<Post> posts = new ArrayList<>();// 1 user has authored many posts - this is how we illustrate the relationship
 
     public enum Role {USER, ADMIN};
 
@@ -82,6 +84,7 @@ public class User {
         this.role = role;
     }
 
+    // TODO: don't forget getters and setters for the posts!
     public List<Post> getPosts() {
         return posts;
     }

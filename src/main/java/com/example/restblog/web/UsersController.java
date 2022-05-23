@@ -14,12 +14,14 @@ import java.util.List;
 @RequestMapping(value = "/api/users", headers = "Accept=application/json")
 public class UsersController {
 
+    // Once the adding and getting of users is removed, we have to inject the UserService into the controller
     private final UserService userService;
 
     public UsersController(UserService userService) {
-        this.userService = userService;
+        this.userService = userService; // injection point of UserService
     }
 
+    // TODO: once all the code for users is taken out, be sure to refactor the controller methods to call on UserService!
     @GetMapping
     public List<User> getAll(){
         return userService.getUsersList();
@@ -55,6 +57,7 @@ public class UsersController {
 
     @PutMapping("{id}/updatePassword")
     public void updatePassword(@PathVariable Long id, @RequestParam(required = false) String oldPassword, @Valid @Size(min = 3) @RequestParam String newPassword) {
+        // TODO: remove this code to the UserService in a public method which actually updates the password of a real user
         User userToUpdate = getById(id);
         userToUpdate.setPassword(newPassword);
         System.out.println(userToUpdate.getPassword());
