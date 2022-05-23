@@ -60,6 +60,17 @@ public class UserService {
         return null;
     }
 
+    public void deletePostById(long id){
+        for (Post post : posts){
+            // Usually we don't want to delete an element from the current list in a loop
+            // but we can do it here because we are only deleting ONE element, then returning out of the method
+            if (post.getId() == id){
+                posts.remove(post);
+                return;
+            }
+        }
+    }
+
     // Taken from UsersController
     private List<User> setUserList(){
         List<User> userList = new ArrayList<>();

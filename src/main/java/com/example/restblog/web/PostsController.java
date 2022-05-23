@@ -63,8 +63,7 @@ public class PostsController {
     @DeleteMapping("{id}")
     public void deletePost(@PathVariable Long id) {
         // TODO: add a public method in UserService to actually delete a Post by ID. Invoke that method here
-        System.out.println("Deleting post with id: " + id);
+        userService.deletePostById(id);
     }
-
 
 }
