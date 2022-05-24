@@ -101,6 +101,6 @@ class PostsController {
 
 ### More than that, after you test this all, you have ANOTHER full stack application!
 
-## Next Up: [Intro To Security](../v-security/18-intro-to-security.md)
+## Next Up: [DTOs and Services](17b-DTOs-and-Services.md)
 
 

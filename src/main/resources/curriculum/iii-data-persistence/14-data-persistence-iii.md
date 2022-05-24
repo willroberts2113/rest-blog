@@ -60,4 +60,48 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 ---
 
+## Performance Tuning
+
+Numerous ways to improve performance of your ORM with Hibernate and Spring Data JPA.
+
+Let's take a look at a few!
+
+### `@DynamicUpdate`
+
+Placing this annotation above an entity class will ensure that only fields which were actually updated 
+will be included in the Hibernate-generated SQL command.
+
+Without `@DynamicUpdate` placed above the `Post` class declaration, 
+when we run an update to an existing post's record and did not update the `title` or `user` fields,
+here is what Hibernate outputs:
+
+```
+Hibernate: update posts set content=?, title=?, user_id=? where id=?
+```
+
+As we can see, Hibernate included updates to fields which we did not update. This can drastically affect performance in large-scale databases!
+
+Now, try this:
+
+```JAVA
+@Entity
+@Table(name="posts")
+@DynamicUpdate // added this annotation
+public class Post {
+    ...
+}
+```
+
+Sending a `PUT` request again to update only `Post.content` will now result in:
+
+```
+Hibernate: update posts set content=? where id=?
+```
+
+!!! 🧐 `@DynamicUpdate` Need-to-Know
+
+    It is ***very*** important to understand that @DynamicUpdate 
+    does *not* discern updated values from null and empty values.
+    This means if you pass a `null` value for content, you will end up with a `null` column for that `Post` record.
+
 ## Next Up: [Code-First Database Design](15-code-first.md)

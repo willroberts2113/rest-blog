@@ -69,10 +69,26 @@ public class User {
 
     // ...Your fields above here
 
-    public enum Role {USER, ADMIN}
-
-    ;
+    public enum Role {USER, ADMIN};
 ```
+
+!!! 🧠 `enum`
+
+In programming, enums (or, enumerated values) represent constant values which share a common purpose.
+
+For example, for a Role enum, you may have DEVELOPER, QA, and MANAGER roles.
+
+In code, this would look like:
+
+  ```JAVA
+    enum Role {DEVELOPER, QA, MANAGER}
+  ```
+
+And could be invoked externally as:
+
+  ```JAVA
+    private Role role = Role.DEVELOPER;
+  ```
 
 #### 3. Create our standard POJO items:
 

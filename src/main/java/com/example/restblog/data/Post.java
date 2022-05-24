@@ -1,14 +1,25 @@
 package com.example.restblog.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.*;
+
+
+// TODO: @Entity and @Table for each entity (table)
+@Entity
+@Table(name="posts")
+@DynamicUpdate
 public class Post {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String content;
 
-    @JsonIgnoreProperties("posts") // ignore the posts field on the User object to prevent extra data from being returned
+    @ManyToOne
+    @JsonIgnoreProperties("posts")// ignore the posts field on the User object to prevent extra data from being returned
     private User user; // each post has only 1 user who authored it
 
     public Post() {

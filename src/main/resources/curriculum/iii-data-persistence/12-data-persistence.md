@@ -49,9 +49,8 @@ Add the following to your `application.properties` file, located in
 
 ```
 spring.datasource.url=jdbc:mysql://localhost/blog_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-spring.datasource.username=blog_user
-spring.datasource.password=p@$$w0rd
-spring.jpa.hibernate.ddl-auto=update
+spring.datasource.username=root
+spring.datasource.password=codeup
 spring.jpa.show-sql=true
 ```
 
@@ -247,7 +246,30 @@ ad (`delete`).
 
 1. Convert the `User` object to an Entity.
 
-2. Inside the `data` package, create a `UserRepository` much like for `PostRepository`.
+2. The `User` object has a class-scoped `enum` for the roles a user may be granted. 
+An enum value is assigned to `User.role` like so:
+```JAVA
+  private Role role = Role.ADMIN;
+```
+
+However, if we try to port the role field into the database, we need to understand that it will not
+show up in the role column as "ADMIN" but rather as an integer.
+
+This is because Java enums are essentially *zero-indexed*, much like an array.
+
+If we want the enum value to appear as the enumerated value "ADMIN", we must add an annotation above the `role` field (not the enum definition):
+
+```JAVA
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+...
+
+@Enumerated(EnumType.STRING) // passes the string value "ADMIN" to Hibernate instead of the integer index
+private Role role = Role.ADMIN;
+```
+
+3. Inside the `data` package, create a `UserRepository` much like for `PostRepository`.
 
 Why no `Category` repository? More to come!!
 

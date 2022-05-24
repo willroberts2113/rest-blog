@@ -2,19 +2,30 @@ package com.example.restblog.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// TODO: @Entity and @Table
+@Entity
+@Table(name="users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String email;
     private String password;
+    // TODO: add a created_at column to the users table (see db_create and insert_test_records scripts)
     private LocalDateTime createdAt = LocalDateTime.now();
+    // TODO: add @Enumerated(EnumType.STRING) above role field to enforce that the enum value is a string, not an int
+    @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
+    @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user") // we want to ignore the post.user field to prevent a StackOverflowError
     private List<Post> posts = new ArrayList<>();// 1 user has authored many posts - this is how we illustrate the relationship
 
@@ -84,7 +95,6 @@ public class User {
         this.role = role;
     }
 
-    // TODO: don't forget getters and setters for the posts!
     public List<Post> getPosts() {
         return posts;
     }

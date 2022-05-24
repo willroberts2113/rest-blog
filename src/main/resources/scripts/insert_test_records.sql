@@ -1,4 +1,5 @@
-INSERT INTO users (username, password, email, role) VALUES ('test_user', 'test123', 'test@test.com', 'USER');
+INSERT INTO users (username, password, email, role, created_at) # TODO: created_at column included on seeder
+VALUES ('test_user', 'test123', 'test@test.com', 'USER', NOW()); # TODO: insert NOW() for created_at column
 
 INSERT INTO posts (user_id, title, content) VALUES (1, 'Babys First Post', 'Do not be alarmed. This is only a test.');
 
