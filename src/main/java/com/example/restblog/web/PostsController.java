@@ -61,4 +61,9 @@ public class PostsController {
         userService.deletePostById(id);
     }
 
+    @GetMapping("search")
+    public List<Post> searchPosts(@RequestParam String keyword) {
+       return userService.getPostsByTitleKeyword(keyword);
+    }
+
 }

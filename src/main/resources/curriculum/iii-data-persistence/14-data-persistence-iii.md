@@ -44,11 +44,11 @@ To solve this issue, you can use `@Param` to give a method parameter a concrete 
 ```java
 public interface PostRepository extends JpaRepository<Post, Long> {
      // The following method is equivalent to the built in `getOne` method, there's no need to create this example
-    @Query("from posts a where a.id like ?1")
+    @Query("from Post a where a.id like ?1")
     Post getPostById(long id);
     
     // The following method shows you how to use named parameters in a HQL custom query:    
-    @Query("from posts a where a.title like %:term%")
+    @Query("from Post a where a.title like %:term%")
     List<Post> searchByTitleLike(@Param("term") String term);
 }
 ```
