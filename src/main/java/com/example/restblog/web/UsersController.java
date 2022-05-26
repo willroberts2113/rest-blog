@@ -63,6 +63,11 @@ public class UsersController {
         System.out.println(userToUpdate.getPassword());
     }
 
+    @PatchMapping("{userId}")
+    public void updateEmail(@PathVariable Long userId, @RequestParam String newEmail){
+        userService.updateEmail(userId, newEmail);
+    }
+
 
 
 }

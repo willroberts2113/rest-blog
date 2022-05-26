@@ -1,10 +1,12 @@
 package com.example.restblog.web;
 
 import com.example.restblog.data.Post;
+import com.example.restblog.dto.CreatePostDto;
+//import com.example.restblog.service.EmailService;
+import com.example.restblog.service.PostService;
 import com.example.restblog.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,23 +15,26 @@ import java.util.Objects;
 @RequestMapping(value = "/api/posts", headers = "Accept=application/json")
 public class PostsController {
 
-    // TODO: see UsersController for the "why" of this
-    private final UserService userService;
+    private final PostService postService;
+//    private final EmailService emailService;
 
-    public PostsController(UserService userService){
-        this.userService = userService;
+    public PostsController(
+            PostService postService
+           /* EmailService emailService*/){
+        this.postService = postService;
+//        this.emailService = emailService;
     }
 
     @GetMapping
     public List<Post> getAll() {
-        return userService.getPostList();
+        return postService.getPostList();
     }
 
     @GetMapping("{id}")
     public Post getById(@PathVariable Long id) {
 
         // TODO: refactor this all out of here
-        for (Post post : userService.getPostList()) {
+        for (Post post : postService.getPostList()) {
             if (Objects.equals(post.getId(), id)) {
                 return post;
             }
@@ -44,26 +49,28 @@ public class PostsController {
     }
 
     @PostMapping("{username}")
-    public void createByUsername(@PathVariable String username, @RequestBody Post newPost){
+    public void createByUsername(@PathVariable String username, @RequestBody CreatePostDto dto){
         // Nice and clean, huh?
-        userService.addPost(newPost, username);
+        Post newPost = new Post();
+        postService.addPost(dto, newPost,username);
+//        emailService.prepareAndSend(newPost, "New Post Created", "You've created a new post.");
     }
 
     @PutMapping("{id}")
     public void updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {
         // TODO: refactor this ALL out of here to a public method in UserService
-        userService.updatePost(id, updatedPost);
+        postService.updatePost(id, updatedPost);
     }
 
     @DeleteMapping("{id}")
     public void deletePost(@PathVariable Long id) {
         // TODO: add a public method in UserService to actually delete a Post by ID. Invoke that method here
-        userService.deletePostById(id);
+        postService.deletePostById(id);
     }
 
     @GetMapping("search")
     public List<Post> searchPosts(@RequestParam String keyword) {
-       return userService.getPostsByTitleKeyword(keyword);
+       return postService.getPostsByTitleKeyword(keyword);
     }
 
 }

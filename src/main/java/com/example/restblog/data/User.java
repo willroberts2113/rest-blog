@@ -1,6 +1,7 @@
 package com.example.restblog.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 // TODO: @Entity and @Table
 @Entity
 @Table(name="users")
+@DynamicUpdate
 public class User {
 
     @Id
