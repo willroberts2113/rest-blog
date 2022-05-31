@@ -40,7 +40,7 @@ export function RegisterEvent(){
             body: JSON.stringify(reqBody)
         }
 
-        fetch("http://localhost:8080/api/users", options)
+        fetch("http://localhost:8080/api/users/create", options)
             .then(res => res.json())
             .then(data => console.log(data))
             .catch(err => console.log(err))

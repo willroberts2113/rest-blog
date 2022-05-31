@@ -4,7 +4,6 @@ import com.example.restblog.data.Post;
 import com.example.restblog.dto.CreatePostDto;
 //import com.example.restblog.service.EmailService;
 import com.example.restblog.service.PostService;
-import com.example.restblog.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

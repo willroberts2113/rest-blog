@@ -40,4 +40,8 @@ public class UserService {
         usersRepository.save(user);
     }
 
+    public void createUser(User user){
+        usersRepository.save(user);
+    }
+
 }
